@@ -19,11 +19,14 @@ Return ONLY valid JSON.
 No markdown.
 No explanation.
 
+Make the CTA different each time.
+Avoid repeating previous outputs.
+
 Format:
 {
   "title": "max 8 words",
   "description": "max 20 words",
-  "cta": "max 4 words"
+  "cta": "2-4 word strong action phrase"
 }
 `;
 
@@ -34,7 +37,10 @@ Format:
 
   let text = response.output_text.trim();
 
-  text = text.replace(/```json/g, "").replace(/```/g, "").trim();
+  text = text
+    .replace(/```json/g, "")
+    .replace(/```/g, "")
+    .trim();
 
   return JSON.parse(text);
 }
