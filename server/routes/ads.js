@@ -18,13 +18,13 @@ async function preloadAds() {
 
 preloadAds();
 
-router.get("/generate", async (req, res) => {
+router.get("/ads/random", async (req, res) => {
   if (adsPool.length === 0) {
     await preloadAds();
   }
 
   const randomIndex = Math.floor(Math.random() * adsPool.length);
-  const ad = adsPool.splice(randomIndex, 1)[0]; // lo elimina del pool
+  const ad = adsPool[randomIndex];
 
   res.json(ad);
 });

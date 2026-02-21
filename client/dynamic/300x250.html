@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dynamic Banner 300x250</title>
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      .banner {
+        width: 300px;
+        height: 250px;
+        background: linear-gradient(135deg, #111, #2c2c2c);
+        color: white;
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        box-sizing: border-box;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        animation: fadeIn 0.8s ease forwards;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(15px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .title {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        animation: slideIn 0.6s ease forwards;
+      }
+
+      .description {
+        font-size: 14px;
+        margin-bottom: 20px;
+        animation: slideIn 0.9s ease forwards;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateX(-15px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      .cta {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        background: #ff3b3b;
+        padding: 8px 14px;
+        border-radius: 4px;
+        font-size: 13px;
+        font-weight: bold;
+        transition:
+          transform 0.3s ease,
+          background 0.3s ease;
+      }
+
+      .cta:hover {
+        transform: scale(1.1);
+        background: #ff1f1f;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="banner" id="banner">
+      <div class="title" id="title">Cargando...</div>
+      <div class="description" id="description"></div>
+      <div class="cta" id="cta">...</div>
+    </div>
+
+    <script>
+      async function loadAd() {
+        try {
+          const response = await fetch("/api/ads/random");
+          const data = await response.json();
+
+          document.getElementById("title").textContent = data.title;
+          document.getElementById("description").textContent = data.description;
+          document.getElementById("cta").textContent = data.cta;
+        } catch (error) {
+          document.getElementById("title").textContent =
+            "Error cargando anuncio";
+        }
+      }
+
+      document.getElementById("banner").addEventListener("click", () => {
+        window.open("https://example.com", "_blank");
+      });
+
+      loadAd();
+    </script>
+  </body>
+</html>
