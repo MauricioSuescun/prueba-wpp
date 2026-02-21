@@ -9,7 +9,7 @@ export function initVideoBanner({ size, clickUrl }) {
   const vol = document.getElementById("vol");
   const controls = document.getElementById("controls");
 
-  const bannerType = `facebook_video_${size}`;
+  const bannerType = `facebook_banner_${size}`;
 
   function trackVideo(eventName, metadata = {}) {
     trackEvent({

@@ -106,7 +106,7 @@
           document.getElementById("cta").textContent = data.cta;
 
           trackEvent({
-            bannerType: "dynamic_300x600",
+            bannerType: "dynamic_banner_300x600",
             event: "impression",
             adId: currentAd?.id,
           });
@@ -118,7 +118,7 @@
 
       document.getElementById("banner").addEventListener("click", () => {
         trackEvent({
-          bannerType: "dynamic_300x600",
+          bannerType: "dynamic_banner_300x600",
           event: "banner_click",
           adId: currentAd?.id,
         });
@@ -128,7 +128,7 @@
       document.getElementById("cta").addEventListener("click", (e) => {
         e.stopPropagation();
         trackEvent({
-          bannerType: "dynamic_300x600",
+          bannerType: "dynamic_banner_300x600",
           event: "cta_click",
           adId: currentAd?.id,
         });

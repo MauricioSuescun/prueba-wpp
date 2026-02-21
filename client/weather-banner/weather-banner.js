@@ -1,6 +1,8 @@
+import { trackEvent } from "/utils/tracking.js";
+
 const CLICK_URL = "https://example.com";
 
-export function initWeatherBanner({ size, clickUrl = CLICK_URL, cities = ["Bogota"] }) {
+export function initWeatherBanner({ size, bannerType, clickUrl = CLICK_URL, cities = ["Bogota"] }) {
   const banner = document.getElementById("banner");
   const cityEl = document.getElementById("city");
   const tempEl = document.getElementById("temp");
@@ -9,6 +11,9 @@ export function initWeatherBanner({ size, clickUrl = CLICK_URL, cities = ["Bogot
 
   const cityList = Array.isArray(cities) ? cities : [cities];
   let currentCityIndex = 0;
+
+  // Métricas: impresión al cargar
+  trackEvent({ bannerType, event: "impression" });
 
   async function loadWeather() {
     const city = cityList[currentCityIndex % cityList.length];
@@ -35,12 +40,14 @@ export function initWeatherBanner({ size, clickUrl = CLICK_URL, cities = ["Bogot
 
   function openUrl(e) {
     if (e) e.stopPropagation();
+    trackEvent({ bannerType, event: "banner_click" });
     window.open(clickUrl, "_blank");
   }
 
   banner.addEventListener("click", () => openUrl());
   cta.addEventListener("click", (e) => {
     e.stopPropagation();
-    openUrl();
+    trackEvent({ bannerType, event: "cta_click" });
+    window.open(clickUrl, "_blank");
   });
 }
