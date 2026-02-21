@@ -87,15 +87,27 @@
       <div class="cta" id="cta">...</div>
     </div>
 
-    <script>
+    <script type="module">
+      import { trackEvent } from "/utils/tracking.js";
+
+      let currentAd = null;
+
       async function loadAd() {
         try {
           const response = await fetch("/api/ads/random");
           const data = await response.json();
 
+          currentAd = data;
+
           document.getElementById("title").textContent = data.title;
           document.getElementById("description").textContent = data.description;
           document.getElementById("cta").textContent = data.cta;
+
+          trackEvent({
+            bannerType: "dynamic_300x250",
+            event: "impression",
+            adId: currentAd?.id,
+          });
         } catch (error) {
           document.getElementById("title").textContent =
             "Error cargando anuncio";
@@ -103,6 +115,24 @@
       }
 
       document.getElementById("banner").addEventListener("click", () => {
+        trackEvent({
+          bannerType: "dynamic_300x250",
+          event: "banner_click",
+          adId: currentAd?.id,
+        });
+
+        window.open("https://example.com", "_blank");
+      });
+
+      document.getElementById("cta").addEventListener("click", (e) => {
+        e.stopPropagation(); // evita doble evento
+
+        trackEvent({
+          bannerType: "dynamic_300x250",
+          event: "cta_click",
+          adId: currentAd?.id,
+        });
+
         window.open("https://example.com", "_blank");
       });
 

@@ -18,7 +18,7 @@ app.use("/api", adsRoutes);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use(express.static(path.join(__dirname, "../client/dynamic banner")));
+app.use(express.static(path.join(__dirname, "../client")));
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/dynamic banner/index.html"));
