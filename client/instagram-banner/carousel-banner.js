@@ -1,26 +1,10 @@
 import { trackEvent } from "/utils/tracking.js";
 
 const SLIDES = [
-  {
-    image: "https://picsum.photos/seed/c1/600/600",
-    url: "https://example.com/producto-1",
-    alt: "Slide 1",
-  },
-  {
-    image: "https://picsum.photos/seed/c2/600/600",
-    url: "https://example.com/producto-2",
-    alt: "Slide 2",
-  },
-  {
-    image: "https://picsum.photos/seed/c3/600/600",
-    url: "https://example.com/producto-3",
-    alt: "Slide 3",
-  },
-  {
-    image: "https://picsum.photos/seed/c4/600/600",
-    url: "https://example.com/producto-4",
-    alt: "Slide 4",
-  },
+  { image: "https://picsum.photos/seed/c1/600/600", url: "https://example.com/producto-1", alt: "Slide 1", tag: "Nuevo" },
+  { image: "https://picsum.photos/seed/c2/600/600", url: "https://example.com/producto-2", alt: "Slide 2", tag: "Oferta" },
+  { image: "https://picsum.photos/seed/c3/600/600", url: "https://example.com/producto-3", alt: "Slide 3", tag: "Colección" },
+  { image: "https://picsum.photos/seed/c4/600/600", url: "https://example.com/producto-4", alt: "Slide 4", tag: "Ver más" },
 ];
 
 export function initCarouselBanner({ size, bannerType }) {
@@ -34,10 +18,12 @@ export function initCarouselBanner({ size, bannerType }) {
   const total = SLIDES.length;
 
   function renderSlides() {
+    const tag = (s) => (s.tag ? `<div class="slide-overlay"><span class="slide-tag">${s.tag}</span></div>` : "");
     track.innerHTML = SLIDES.map(
       (s, i) =>
         `<a class="slide" href="${s.url}" target="_blank" rel="noopener" data-index="${i}" data-url="${s.url}">
-          <img src="${s.image}" alt="${s.alt}" />
+          <img src="${s.image}" alt="${s.alt}" loading="lazy" />
+          ${tag(s)}
         </a>`
     ).join("");
 
@@ -72,6 +58,8 @@ export function initCarouselBanner({ size, bannerType }) {
     dots.querySelectorAll(".dot").forEach((d, j) => {
       d.classList.toggle("active", j === index);
     });
+    prevBtn.classList.toggle("hidden", index === 0);
+    nextBtn.classList.toggle("hidden", index === total - 1);
   }
 
   prevBtn.addEventListener("click", (e) => {
