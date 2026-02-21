@@ -38,7 +38,6 @@ app.get("/facebook-banner/300x600", (req, res) => {
 app.get("/facebook-banner/320x480", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/facebook-banner/320x480.html"));
 });
-
 app.get("/instagram-banner/300x600", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/instagram-banner/300x600.html"));
 });

@@ -100,9 +100,32 @@
         from { opacity: 0; transform: translateX(-50%) translateY(10px); }
         to { opacity: 1; transform: translateX(-50%) translateY(0); }
       }
+      .stats-panel {
+        position: fixed;
+        top: 16px; right: 16px;
+        background: rgba(0,0,0,0.92);
+        border: 1px solid #333;
+        border-radius: 10px;
+        padding: 14px 18px;
+        color: #fff;
+        font-size: 12px;
+        min-width: 200px;
+        z-index: 999;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      }
+      .stats-panel h3 { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: #888; margin-bottom: 10px; }
+      .stats-panel .stat-row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #222; }
+      .stats-panel .stat-row:last-child { border-bottom: none; }
+      .stats-panel .stat-count { font-weight: 700; font-variant-numeric: tabular-nums; }
     </style>
   </head>
   <body>
+    <div class="stats-panel" id="statsPanel">
+      <h3>Métricas de interacción</h3>
+      <div class="stat-row"><span>👁 Impresión</span><span class="stat-count" id="s-impression">0</span></div>
+      <div class="stat-row"><span>🖱 Clic banner</span><span class="stat-count" id="s-banner_click">0</span></div>
+      <div class="stat-row"><span>🔘 Clic CTA</span><span class="stat-count" id="s-cta_click">0</span></div>
+    </div>
     <div class="banner" id="banner">
       <div class="city" id="city">Cargando...</div>
       <div class="temp-wrap">
@@ -114,6 +137,13 @@
     </div>
     <script type="module">
       import { initWeatherBanner } from "./weather-banner.js";
+      const metrics = {};
+      window.addEventListener("banner-track", function(e) {
+        const ev = e.detail.event;
+        metrics[ev] = (metrics[ev] || 0) + 1;
+        const countEl = document.getElementById("s-" + ev);
+        if (countEl) countEl.textContent = metrics[ev];
+      });
       initWeatherBanner({
         size: "300x600",
         bannerType: "weather_banner_300x600",
