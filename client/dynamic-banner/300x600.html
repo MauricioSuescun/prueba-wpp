@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dynamic Banner 300x600</title>
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      .banner {
+        width: 300px;
+        height: 600px;
+        background: linear-gradient(135deg, #111, #2c2c2c);
+        color: white;
+        font-family: Arial, sans-serif;
+        padding: 24px;
+        box-sizing: border-box;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        animation: fadeIn 0.8s ease forwards;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .title {
+        font-size: 22px;
+        font-weight: bold;
+        margin-bottom: 16px;
+        animation: slideIn 0.6s ease forwards;
+      }
+
+      .description {
+        font-size: 16px;
+        line-height: 1.4;
+        margin-bottom: 24px;
+        animation: slideIn 0.9s ease forwards;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateX(-15px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      .cta {
+        position: absolute;
+        bottom: 24px;
+        left: 24px;
+        background: #ff3b3b;
+        padding: 10px 18px;
+        border-radius: 4px;
+        font-size: 15px;
+        font-weight: bold;
+        transition:
+          transform 0.3s ease,
+          background 0.3s ease;
+      }
+
+      .cta:hover {
+        transform: scale(1.1);
+        background: #ff1f1f;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="banner" id="banner">
+      <div class="title" id="title">Cargando...</div>
+      <div class="description" id="description"></div>
+      <div class="cta" id="cta">...</div>
+    </div>
+
+    <script type="module">
+      import { trackEvent } from "/utils/tracking.js";
+
+      let currentAd = null;
+      const clickUrl = "https://example.com";
+
+      async function loadAd() {
+        try {
+          const response = await fetch("/api/ads/random");
+          const data = await response.json();
+
+          currentAd = data;
+
+          document.getElementById("title").textContent = data.title;
+          document.getElementById("description").textContent = data.description;
+          document.getElementById("cta").textContent = data.cta;
+
+          trackEvent({
+            bannerType: "dynamic_300x600",
+            event: "impression",
+            adId: currentAd?.id,
+          });
+        } catch (error) {
+          document.getElementById("title").textContent =
+            "Error cargando anuncio";
+        }
+      }
+
+      document.getElementById("banner").addEventListener("click", () => {
+        trackEvent({
+          bannerType: "dynamic_300x600",
+          event: "banner_click",
+          adId: currentAd?.id,
+        });
+        window.open(clickUrl, "_blank");
+      });
+
+      document.getElementById("cta").addEventListener("click", (e) => {
+        e.stopPropagation();
+        trackEvent({
+          bannerType: "dynamic_300x600",
+          event: "cta_click",
+          adId: currentAd?.id,
+        });
+        window.open(clickUrl, "_blank");
+      });
+
+      loadAd();
+    </script>
+  </body>
+</html>

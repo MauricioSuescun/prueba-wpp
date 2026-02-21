@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Weather Banner 300x250</title>
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; padding: 0; }
+      .banner {
+        width: 300px;
+        height: 250px;
+        background: linear-gradient(160deg, #0c4a6e 0%, #0e7490 50%, #06b6d4 100%);
+        color: #fff;
+        font-family: Arial, sans-serif;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+      }
+      .banner::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.12) 0%, transparent 45%);
+        animation: shimmer 8s ease-in-out infinite;
+      }
+      @keyframes shimmer {
+        0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.8; }
+        50% { transform: translate(5%, 5%) scale(1.05); opacity: 1; }
+      }
+      .city {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        font-size: 14px;
+        font-weight: bold;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        animation: slideDown 0.6s ease forwards;
+      }
+      .temp-wrap {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        animation: scaleIn 0.7s ease forwards;
+      }
+      .temp {
+        font-size: 52px;
+        font-weight: bold;
+        line-height: 1;
+        letter-spacing: -2px;
+      }
+      .temp span { font-size: 28px; opacity: 0.9; }
+      .condition {
+        font-size: 14px;
+        margin-top: 4px;
+        opacity: 0.95;
+      }
+      @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-12px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes scaleIn {
+        from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+        to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      }
+      .copy {
+        position: absolute;
+        bottom: 50px;
+        left: 16px;
+        right: 16px;
+        font-size: 13px;
+        text-align: center;
+        animation: fadeUp 0.8s ease 0.3s forwards;
+        opacity: 0;
+      }
+      .cta {
+        position: absolute;
+        bottom: 14px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #fff;
+        color: #0c4a6e;
+        padding: 10px 20px;
+        border-radius: 24px;
+        font-size: 14px;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        animation: fadeUp 0.6s ease 0.5s forwards;
+        opacity: 0;
+      }
+      .cta:hover { background: #e0f2fe; }
+      @keyframes fadeUp {
+        from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+        to { opacity: 1; transform: translateX(-50%) translateY(0); }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="banner" id="banner">
+      <div class="city" id="city">Cargando...</div>
+      <div class="temp-wrap">
+        <div class="temp" id="temp">--<span>°C</span></div>
+        <div class="condition" id="condition">—</div>
+      </div>
+      <p class="copy">¿Listo para el clima? Descubre nuestra colección.</p>
+      <button type="button" class="cta" id="cta">Ver más</button>
+    </div>
+    <script type="module">
+      import { initWeatherBanner } from "./weather-banner.js";
+      initWeatherBanner({
+        size: "300x250",
+        clickUrl: "https://example.com",
+        cities: ["Bogota", "Medellin", "Cali", "Barranquilla", "Cartagena"],
+      });
+    </script>
+  </body>
+</html>

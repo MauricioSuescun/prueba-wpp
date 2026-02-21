@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Plataforma - Generador de anuncios con IA</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <section class="panel">
+        <h1>Alimentar catálogo de anuncios</h1>
+        <p class="subtitle">
+          Genera contenidos con IA y añádelos al endpoint. Los banners dinámicos
+          mostrarán un anuncio aleatorio de este catálogo.
+        </p>
+        <form id="form-feed" class="form-feed">
+          <label>
+            Marca
+            <input type="text" name="brand" value="Nike" placeholder="Ej: Nike" />
+          </label>
+          <label>
+            País
+            <input
+              type="text"
+              name="country"
+              value="Colombia"
+              placeholder="Ej: Colombia"
+            />
+          </label>
+          <label>
+            Tipo de producto
+            <input
+              type="text"
+              name="productType"
+              value="running shoes"
+              placeholder="Ej: running shoes"
+            />
+          </label>
+          <button type="submit">Generar con IA y añadir al catálogo</button>
+        </form>
+        <div id="feed-result" class="feed-result" aria-live="polite"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Vista previa (anuncio aleatorio)</h2>
+        <div class="banner preview-banner">
+          <h2 id="ad-title">Cargando anuncio...</h2>
+          <p id="ad-description"></p>
+          <button id="ad-cta" type="button"></button>
+        </div>
+        <button type="button" class="refresh-btn" id="btn-refresh">
+          Ver otro anuncio
+        </button>
+        <p class="links">
+          <a href="/dynamic-banner/300x250">Banner 300×250</a> ·
+          <a href="/dynamic-banner/300x600">Banner 300×600</a>
+        </p>
+      </section>
+
+      <section class="panel panel-links">
+        <h2>Enlaces a todos los banners</h2>
+        <ul class="banner-links">
+          <li><strong>Dynamic:</strong> <a href="/dynamic-banner/300x250">300×250</a>, <a href="/dynamic-banner/300x600">300×600</a></li>
+          <li><strong>Facebook:</strong> <a href="/facebook-banner/300x600">300×600</a>, <a href="/facebook-banner/320x480">320×480</a></li>
+          <li><strong>Instagram:</strong> <a href="/instagram-banner/300x600">300×600</a>, <a href="/instagram-banner/320x480">320×480</a></li>
+          <li><strong>Weather:</strong> <a href="/weather-banner/300x250">300×250</a>, <a href="/weather-banner/300x600">300×600</a></li>
+        </ul>
+        <p class="subtitle">Métricas de eventos: <a href="/api/metrics" target="_blank" rel="noopener">GET /api/metrics</a></p>
+      </section>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
