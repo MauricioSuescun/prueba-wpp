@@ -17,8 +17,14 @@ export function initVideoBanner({ size, clickUrl }) {
   const progressBar = document.getElementById("progressBar");
   const progressFill = document.getElementById("progressFill");
   const controls = document.getElementById("controls");
+  const volumeBadge = document.getElementById("volumeBadge");
 
   const bannerType = `facebook_banner_${size}`;
+
+  function updateVolumeBadge(isMuted) {
+    if (!volumeBadge) return;
+    volumeBadge.innerHTML = "<svg viewBox=\"0 0 24 24\">" + (isMuted ? MUTE_SVG : UNMUTE_SVG) + "</svg>";
+  }
 
   function trackVideo(eventName, metadata = {}) {
     trackEvent({
@@ -101,6 +107,7 @@ export function initVideoBanner({ size, clickUrl }) {
     e.stopPropagation();
     video.muted = !video.muted;
     if (muteSvg) muteSvg.innerHTML = video.muted ? MUTE_SVG : UNMUTE_SVG;
+    updateVolumeBadge(video.muted);
     trackVideo(video.muted ? "video_mute" : "video_unmute");
   });
 
@@ -116,6 +123,7 @@ export function initVideoBanner({ size, clickUrl }) {
       video.muted = false;
       if (muteSvg) muteSvg.innerHTML = UNMUTE_SVG;
     }
+    updateVolumeBadge(video.muted);
     trackEvent({
       bannerType,
       event: "video_volume_change",

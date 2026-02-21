@@ -5,20 +5,27 @@
     <title>Video Post 320x480</title>
     <style>
       * { box-sizing: border-box; }
-      body { margin: 0; padding: 0; }
+      body {
+        margin: 0;
+        padding: 0;
+        background: #f0f2f5;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      }
       .banner {
         width: 320px;
         height: 480px;
-        background: #000;
-        position: relative;
-        cursor: pointer;
+        background: #fff;
+        border-radius: 8px;
         overflow: hidden;
+        cursor: pointer;
+        position: relative;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.1);
       }
       .video-wrap {
         position: relative;
         width: 100%;
-        height: calc(100% - 48px);
-        background: #000;
+        height: 258px;
+        background: #1c1c1e;
       }
       .video-wrap video {
         width: 100%;
@@ -30,11 +37,11 @@
         position: absolute;
         top: 50%; left: 50%;
         transform: translate(-50%, -50%);
-        width: 56px; height: 56px;
-        background: rgba(255,255,255,0.15);
-        backdrop-filter: blur(4px);
+        width: 52px; height: 52px;
+        background: rgba(255,255,255,0.2);
+        backdrop-filter: blur(6px);
         border-radius: 50%;
-        border: 2px solid rgba(255,255,255,0.6);
+        border: 2px solid rgba(255,255,255,0.7);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -43,28 +50,28 @@
         cursor: pointer;
       }
       .play-overlay:hover {
-        background: rgba(255,255,255,0.25);
-        transform: translate(-50%, -50%) scale(1.1);
+        background: rgba(255,255,255,0.3);
+        transform: translate(-50%, -50%) scale(1.08);
       }
       .play-overlay.hidden { opacity: 0; pointer-events: none; }
       .play-icon {
         width: 0; height: 0;
-        border-top: 10px solid transparent;
-        border-bottom: 10px solid transparent;
-        border-left: 16px solid #fff;
-        margin-left: 4px;
+        border-top: 9px solid transparent;
+        border-bottom: 9px solid transparent;
+        border-left: 14px solid #fff;
+        margin-left: 3px;
       }
       .video-controls {
         position: absolute;
         bottom: 0; left: 0; right: 0;
-        background: linear-gradient(transparent, rgba(0,0,0,0.85));
-        padding: 16px 10px 8px;
+        background: linear-gradient(transparent, rgba(0,0,0,0.88));
+        padding: 12px 10px 6px;
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 6px;
         z-index: 5;
         opacity: 0;
-        transition: opacity 0.3s;
+        transition: opacity 0.25s;
       }
       .video-wrap:hover .video-controls { opacity: 1; }
       .ctrl-btn {
@@ -79,38 +86,76 @@
         transition: transform 0.15s;
         flex-shrink: 0;
       }
-      .ctrl-btn:hover { transform: scale(1.2); }
-      .ctrl-btn svg { width: 18px; height: 18px; fill: #fff; }
+      .ctrl-btn:hover { transform: scale(1.15); }
+      .ctrl-btn svg { width: 16px; height: 16px; fill: #fff; }
       .progress-bar {
         flex: 1;
-        height: 4px;
-        background: rgba(255,255,255,0.3);
-        border-radius: 4px;
+        height: 3px;
+        background: rgba(255,255,255,0.25);
+        border-radius: 3px;
         cursor: pointer;
         overflow: hidden;
       }
       .progress-fill {
         height: 100%;
         background: #fff;
-        border-radius: 4px;
+        border-radius: 3px;
         width: 0%;
         transition: width 0.15s;
       }
       .volume-slider {
-        width: 52px;
+        width: 44px;
         accent-color: #fff;
         cursor: pointer;
       }
-      .brand {
+      .volume-badge {
         position: absolute;
-        top: 12px; left: 12px;
-        color: #fff;
-        font-family: Arial, sans-serif;
-        font-size: 14px;
-        font-weight: bold;
-        text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+        bottom: 8px;
+        right: 8px;
+        width: 26px;
+        height: 26px;
+        background: rgba(0,0,0,0.5);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         z-index: 4;
+        pointer-events: none;
       }
+      .volume-badge svg { width: 12px; height: 12px; fill: #fff; }
+      .post-content {
+        padding: 10px 12px 12px;
+        background: #fff;
+        border-top: 1px solid #e4e6eb;
+      }
+      .post-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: #1c1e21;
+        line-height: 1.3;
+        margin: 0 0 8px;
+      }
+      .post-actions {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        margin-bottom: 6px;
+      }
+      .post-actions span {
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        padding: 3px 6px;
+        font-size: 12px;
+        color: #65676b;
+        border-radius: 4px;
+      }
+      .post-actions span:hover { background: #f0f2f5; color: #1877f2; }
+      .post-metrics {
+        font-size: 12px;
+        color: #65676b;
+      }
+      .post-metrics .sep { margin: 0 3px; }
       .stats-panel {
         position: fixed;
         top: 16px; right: 16px;
@@ -142,13 +187,15 @@
       <div class="stat-row"><span>🖱 Clic banner</span><span class="stat-count" id="s-banner_click">0</span></div>
     </div>
     <div class="banner" id="banner">
-      <span class="brand">Marca Demo</span>
       <div class="video-wrap">
         <video id="video" playsinline preload="metadata"
           src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4">
         </video>
         <div class="play-overlay" id="playOverlay">
           <div class="play-icon"></div>
+        </div>
+        <div class="volume-badge" id="volumeBadge" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
         </div>
         <div class="video-controls" id="controls">
           <button type="button" class="ctrl-btn" id="btn-play" title="Play/Pause">
@@ -161,6 +208,17 @@
             <svg viewBox="0 0 24 24" id="muteSvg"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
           </button>
           <input type="range" class="volume-slider" id="vol" min="0" max="1" step="0.05" value="1" title="Volumen">
+        </div>
+      </div>
+      <div class="post-content">
+        <h2 class="post-title">Video destacado · Descubre más</h2>
+        <div class="post-actions">
+          <span>👍 Me gusta</span>
+          <span>💬 Comentar</span>
+          <span>↗ Compartir</span>
+        </div>
+        <div class="post-metrics">
+          <span id="metricLikes">0</span><span class="sep">·</span><span id="metricComments">0 comentarios</span><span class="sep">·</span><span id="metricPlays">0 reproducciones</span>
         </div>
       </div>
     </div>
