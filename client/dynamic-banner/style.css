@@ -17,6 +17,22 @@ body {
   align-items: flex-start;
 }
 
+/* header */
+.site-header {
+  width: 100%;
+  background: #222;
+  color: #fff;
+  padding: 16px 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  margin-bottom: 24px;
+}
+.site-header h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-family: "Arial Black", Arial, sans-serif;
+  letter-spacing: 1px;
+}
+
 .panel {
   background: #fff;
   padding: 24px;
@@ -160,13 +176,19 @@ body {
   list-style: none;
   padding: 0;
   margin: 0 0 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 .panel-links .banner-links li {
-  padding: 6px 0;
-  border-bottom: 1px solid #eee;
+  background: #fafafa;
+  padding: 8px 12px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 .panel-links .banner-links a {
   color: #0066cc;
+  font-weight: 600;
 }
 .panel-links .banner-links a:hover {
   text-decoration: underline;

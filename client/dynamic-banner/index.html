@@ -3,9 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <title>Plataforma - Generador de anuncios con IA</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="/dynamic-banner/style.css" />
   </head>
   <body>
+    <header class="site-header">
+      <h1>Catálogo de Banners Dinámicos</h1>
+    </header>
     <div class="container">
       <section class="panel">
         <h1>Alimentar catálogo de anuncios</h1>
@@ -16,7 +19,12 @@
         <form id="form-feed" class="form-feed">
           <label>
             Marca
-            <input type="text" name="brand" value="Nike" placeholder="Ej: Nike" />
+            <input
+              type="text"
+              name="brand"
+              value="Nike"
+              placeholder="Ej: Nike"
+            />
           </label>
           <label>
             País
@@ -60,12 +68,33 @@
       <section class="panel panel-links">
         <h2>Enlaces a todos los banners</h2>
         <ul class="banner-links">
-          <li><strong>Dynamic:</strong> <a href="/dynamic-banner/300x250">300×250</a>, <a href="/dynamic-banner/300x600">300×600</a></li>
-          <li><strong>Facebook:</strong> <a href="/facebook-banner/300x600">300×600</a>, <a href="/facebook-banner/320x480">320×480</a></li>
-          <li><strong>Instagram:</strong> <a href="/instagram-banner/300x600">300×600</a>, <a href="/instagram-banner/320x480">320×480</a></li>
-          <li><strong>Weather:</strong> <a href="/weather-banner/300x250">300×250</a>, <a href="/weather-banner/300x600">300×600</a></li>
+          <li>
+            <strong>Dynamic:</strong>
+            <a href="/dynamic-banner/300x250">300×250</a>,
+            <a href="/dynamic-banner/300x600">300×600</a>
+          </li>
+          <li>
+            <strong>Facebook:</strong>
+            <a href="/facebook-banner/300x600">300×600</a>,
+            <a href="/facebook-banner/320x480">320×480</a>
+          </li>
+          <li>
+            <strong>Instagram:</strong>
+            <a href="/instagram-banner/300x600">300×600</a>,
+            <a href="/instagram-banner/320x480">320×480</a>
+          </li>
+          <li>
+            <strong>Weather:</strong>
+            <a href="/weather-banner/300x250">300×250</a>,
+            <a href="/weather-banner/300x600">300×600</a>
+          </li>
         </ul>
-        <p class="subtitle">Métricas de eventos: <a href="/api/metrics" target="_blank" rel="noopener">GET /api/metrics</a></p>
+        <p class="subtitle">
+          Métricas de eventos:
+          <a href="/api/metrics" target="_blank" rel="noopener"
+            >GET /api/metrics</a
+          >
+        </p>
       </section>
     </div>
 
