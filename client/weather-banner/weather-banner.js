@@ -2,12 +2,21 @@ import { trackEvent } from "/utils/tracking.js";
 
 const CLICK_URL = "https://example.com";
 
-export function initWeatherBanner({ size, bannerType, clickUrl = CLICK_URL, cities = ["Bogota"] }) {
+export function initWeatherBanner({
+  size,
+  bannerType,
+  clickUrl = CLICK_URL,
+  cities = ["Bogota"],
+  brand = "ClimaPro",
+}) {
   const banner = document.getElementById("banner");
+  const brandEl = document.getElementById("brand");
   const cityEl = document.getElementById("city");
   const tempEl = document.getElementById("temp");
   const conditionEl = document.getElementById("condition");
   const cta = document.getElementById("cta");
+
+  if (brandEl) brandEl.textContent = brand;
 
   const cityList = Array.isArray(cities) ? cities : [cities];
   let currentCityIndex = 0;
@@ -23,16 +32,30 @@ export function initWeatherBanner({ size, bannerType, clickUrl = CLICK_URL, citi
       cityEl.textContent = data.city || city;
       tempEl.innerHTML = `${data.temp !== undefined ? data.temp : "--"}<span>°C</span>`;
       conditionEl.textContent = data.condition || "—";
+      applyWeatherEffects(Number(data.code));
     } catch (e) {
       cityEl.textContent = "Colombia";
       tempEl.innerHTML = `--<span>°C</span>`;
       conditionEl.textContent = "—";
+      banner.classList.remove("rainy", "sunny", "cloudy");
     }
   }
 
   function rotateCity() {
     currentCityIndex++;
     loadWeather();
+  }
+
+  function applyWeatherEffects(code) {
+    banner.classList.remove("rainy", "sunny", "cloudy");
+    // simple grouping based on weather codes from Open-Meteo
+    if (code >= 61 && code <= 82) {
+      banner.classList.add("rainy");
+    } else if (code === 0 || code === 1) {
+      banner.classList.add("sunny");
+    } else {
+      banner.classList.add("cloudy");
+    }
   }
 
   loadWeather();

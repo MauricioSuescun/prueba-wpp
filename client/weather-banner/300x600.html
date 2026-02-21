@@ -4,12 +4,22 @@
     <meta charset="UTF-8" />
     <title>Weather Banner 300x600</title>
     <style>
-      * { box-sizing: border-box; }
-      body { margin: 0; padding: 0; }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+      }
       .banner {
         width: 300px;
         height: 600px;
-        background: linear-gradient(160deg, #0c4a6e 0%, #0e7490 40%, #06b6d4 100%);
+        background: linear-gradient(
+          160deg,
+          #0c4a6e 0%,
+          #0e7490 40%,
+          #06b6d4 100%
+        );
         color: #fff;
         font-family: Arial, sans-serif;
         position: relative;
@@ -23,12 +33,109 @@
         left: -50%;
         width: 200%;
         height: 200%;
-        background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.12) 0%, transparent 45%);
+        background: radial-gradient(
+          circle at 30% 30%,
+          rgba(255, 255, 255, 0.12) 0%,
+          transparent 45%
+        );
         animation: shimmer 8s ease-in-out infinite;
       }
+      /* brand label */
+      .brand {
+        position: absolute;
+        top: 12px;
+        right: 16px;
+        font-size: 14px;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #fff;
+        opacity: 0.85;
+        z-index: 2;
+      }
+      /* weather decorations */
+      .sun,
+      .cloud,
+      .raindrop {
+        position: absolute;
+        pointer-events: none;
+      }
+      .sun {
+        display: none;
+        top: 36px;
+        right: 36px;
+        width: 50px;
+        height: 50px;
+        background: radial-gradient(circle, #ffeb3b 0%, #ffc107 80%);
+        border-radius: 50%;
+        box-shadow: 0 0 16px rgba(255, 235, 59, 0.6);
+        animation: rotateSun 20s linear infinite;
+      }
+      .cloud {
+        top: 30px;
+        width: 80px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.85);
+        border-radius: 50%;
+        opacity: 0.9;
+        animation: floatCloud 14s linear infinite;
+      }
+      .cloud.cloud2 {
+        top: 60px;
+        width: 100px;
+        left: -120px;
+        animation-duration: 18s;
+      }
+      .raindrop {
+        display: none;
+        width: 2px;
+        height: 12px;
+        background: rgba(255, 255, 255, 0.7);
+        animation: fall 1.2s linear infinite;
+        opacity: 0.8;
+      }
+      .banner.rainy .raindrop {
+        display: block;
+      }
+      .banner.sunny .sun {
+        display: block;
+      }
+
+      @keyframes rotateSun {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes floatCloud {
+        0% {
+          transform: translateX(-100px);
+        }
+        100% {
+          transform: translateX(400px);
+        }
+      }
+      @keyframes fall {
+        0% {
+          transform: translateY(0);
+          opacity: 0.8;
+        }
+        100% {
+          transform: translateY(260px);
+          opacity: 0;
+        }
+      }
       @keyframes shimmer {
-        0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.8; }
-        50% { transform: translate(5%, 5%) scale(1.05); opacity: 1; }
+        0%,
+        100% {
+          transform: translate(0, 0) scale(1);
+          opacity: 0.8;
+        }
+        50% {
+          transform: translate(5%, 5%) scale(1.05);
+          opacity: 1;
+        }
       }
       .city {
         position: absolute;
@@ -36,7 +143,7 @@
         left: 24px;
         font-size: 18px;
         font-weight: bold;
-        text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         animation: slideDown 0.6s ease forwards;
       }
       .temp-wrap {
@@ -53,57 +160,93 @@
         line-height: 1;
         letter-spacing: -2px;
       }
-      .temp span { font-size: 36px; opacity: 0.9; }
+      .temp span {
+        font-size: 36px;
+        opacity: 0.9;
+      }
       .condition {
         font-size: 18px;
         margin-top: 8px;
         opacity: 0.95;
       }
       @keyframes slideDown {
-        from { opacity: 0; transform: translateY(-12px); }
-        to { opacity: 1; transform: translateY(0); }
+        from {
+          opacity: 0;
+          transform: translateY(-12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
       @keyframes scaleIn {
-        from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-        to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        from {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0.8);
+        }
+        to {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1);
+        }
       }
       .copy {
         position: absolute;
-        bottom: 140px;
+        bottom: 160px;
         left: 24px;
         right: 24px;
-        font-size: 16px;
+        font-size: 18px;
+        font-weight: 500;
         text-align: center;
         line-height: 1.4;
-        animation: fadeUp 0.8s ease 0.3s forwards;
+        animation:
+          fadeUp 0.8s ease 0.3s forwards,
+          pulse 3s ease-in-out infinite alternate;
         opacity: 0;
       }
       .cta {
         position: absolute;
-        bottom: 32px;
+        bottom: 36px;
         left: 50%;
         transform: translateX(-50%);
         background: #fff;
         color: #0c4a6e;
-        padding: 14px 28px;
+        padding: 16px 32px;
         border-radius: 28px;
-        font-size: 16px;
+        font-size: 18px;
         font-weight: bold;
         border: none;
         cursor: pointer;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         animation: fadeUp 0.6s ease 0.5s forwards;
         opacity: 0;
       }
-      .cta:hover { background: #e0f2fe; }
+      .cta:hover {
+        background: #e0f2fe;
+      }
       @keyframes fadeUp {
-        from { opacity: 0; transform: translateX(-50%) translateY(10px); }
-        to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        from {
+          opacity: 0;
+          transform: translateX(-50%) translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(-50%) translateY(0);
+        }
+      }
+      @keyframes pulse {
+        from {
+          opacity: 0.85;
+        }
+        to {
+          opacity: 1;
+          transform: scale(1.02);
+        }
       }
       .stats-panel {
         position: fixed;
-        top: 16px; right: 16px;
-        background: rgba(0,0,0,0.92);
+        top: 16px;
+        right: 16px;
+        background: rgba(0, 0, 0, 0.92);
         border: 1px solid #333;
         border-radius: 10px;
         padding: 14px 18px;
@@ -111,34 +254,70 @@
         font-size: 12px;
         min-width: 200px;
         z-index: 999;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
       }
-      .stats-panel h3 { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: #888; margin-bottom: 10px; }
-      .stats-panel .stat-row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #222; }
-      .stats-panel .stat-row:last-child { border-bottom: none; }
-      .stats-panel .stat-count { font-weight: 700; font-variant-numeric: tabular-nums; }
+      .stats-panel h3 {
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: #888;
+        margin-bottom: 10px;
+      }
+      .stats-panel .stat-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 4px 0;
+        border-bottom: 1px solid #222;
+      }
+      .stats-panel .stat-row:last-child {
+        border-bottom: none;
+      }
+      .stats-panel .stat-count {
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+      }
     </style>
   </head>
   <body>
     <div class="stats-panel" id="statsPanel">
       <h3>Métricas de interacción</h3>
-      <div class="stat-row"><span>👁 Impresión</span><span class="stat-count" id="s-impression">0</span></div>
-      <div class="stat-row"><span>🖱 Clic banner</span><span class="stat-count" id="s-banner_click">0</span></div>
-      <div class="stat-row"><span>🔘 Clic CTA</span><span class="stat-count" id="s-cta_click">0</span></div>
+      <div class="stat-row">
+        <span>👁 Impresión</span
+        ><span class="stat-count" id="s-impression">0</span>
+      </div>
+      <div class="stat-row">
+        <span>🖱 Clic banner</span
+        ><span class="stat-count" id="s-banner_click">0</span>
+      </div>
+      <div class="stat-row">
+        <span>🔘 Clic CTA</span
+        ><span class="stat-count" id="s-cta_click">0</span>
+      </div>
     </div>
     <div class="banner" id="banner">
+      <div class="brand">ClimaPro</div>
+      <!-- decorations -->
+      <div class="sun"></div>
+      <div class="cloud"></div>
+      <div class="cloud cloud2"></div>
+      <div class="raindrop" style="left: 50px; animation-delay: 0s"></div>
+      <div class="raindrop" style="left: 100px; animation-delay: 0.4s"></div>
+      <div class="raindrop" style="left: 150px; animation-delay: 0.8s"></div>
+
       <div class="city" id="city">Cargando...</div>
       <div class="temp-wrap">
         <div class="temp" id="temp">--<span>°C</span></div>
         <div class="condition" id="condition">—</div>
       </div>
-      <p class="copy">¿Listo para el clima? Descubre nuestra colección en Colombia.</p>
+      <p class="copy">
+        ¿Listo para el clima? Descubre nuestra colección en Colombia.
+      </p>
       <button type="button" class="cta" id="cta">Ver más</button>
     </div>
     <script type="module">
       import { initWeatherBanner } from "./weather-banner.js";
       const metrics = {};
-      window.addEventListener("banner-track", function(e) {
+      window.addEventListener("banner-track", function (e) {
         const ev = e.detail.event;
         metrics[ev] = (metrics[ev] || 0) + 1;
         const countEl = document.getElementById("s-" + ev);
@@ -149,6 +328,7 @@
         bannerType: "weather_banner_300x600",
         clickUrl: "https://example.com",
         cities: ["Bogota", "Medellin", "Cali", "Barranquilla", "Cartagena"],
+        brand: "ClimaPro",
       });
     </script>
   </body>
