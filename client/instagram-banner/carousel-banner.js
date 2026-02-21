@@ -1,10 +1,11 @@
 import { trackEvent } from "/utils/tracking.js";
 
+// Imágenes de Pexels (búsqueda "adidas shoes") – fotos de zapatos Adidas
 const SLIDES = [
-  { image: "https://picsum.photos/seed/c1/600/600", url: "https://example.com/producto-1", alt: "Slide 1", tag: "Nuevo" },
-  { image: "https://picsum.photos/seed/c2/600/600", url: "https://example.com/producto-2", alt: "Slide 2", tag: "Oferta" },
-  { image: "https://picsum.photos/seed/c3/600/600", url: "https://example.com/producto-3", alt: "Slide 3", tag: "Colección" },
-  { image: "https://picsum.photos/seed/c4/600/600", url: "https://example.com/producto-4", alt: "Slide 4", tag: "Ver más" },
+  { image: "https://images.pexels.com/photos/13058810/pexels-photo-13058810.jpeg?auto=compress&cs=tinysrgb&w=600", url: "https://www.adidas.com.co/running", alt: "Adidas Running", tag: "Running" },
+  { image: "https://images.pexels.com/photos/233312/pexels-photo-233312.jpeg?auto=compress&cs=tinysrgb&w=600", url: "https://www.adidas.com.co/basketball", alt: "Adidas Basketball", tag: "Basketball" },
+  { image: "https://images.pexels.com/photos/6150128/pexels-photo-6150128.jpeg?auto=compress&cs=tinysrgb&w=600", url: "https://www.adidas.com.co/originals", alt: "Adidas Originals", tag: "Originals" },
+  { image: "https://images.pexels.com/photos/6050909/pexels-photo-6050909.jpeg?auto=compress&cs=tinysrgb&w=600", url: "https://www.adidas.com.co/entrenamiento", alt: "Adidas Training", tag: "Training" },
 ];
 
 export function initCarouselBanner({ size, bannerType }) {
