@@ -2,10 +2,34 @@ import { trackEvent } from "/utils/tracking.js";
 
 // Imágenes de Pexels (búsqueda "adidas shoes") – fotos de zapatos Adidas
 const SLIDES = [
-  { image: "https://images.pexels.com/photos/13058810/pexels-photo-13058810.jpeg?auto=compress&cs=tinysrgb&w=600", url: "https://www.adidas.com.co/running", alt: "Adidas Running", tag: "Running" },
-  { image: "https://images.pexels.com/photos/233312/pexels-photo-233312.jpeg?auto=compress&cs=tinysrgb&w=600", url: "https://www.adidas.com.co/basketball", alt: "Adidas Basketball", tag: "Basketball" },
-  { image: "https://images.pexels.com/photos/6150128/pexels-photo-6150128.jpeg?auto=compress&cs=tinysrgb&w=600", url: "https://www.adidas.com.co/originals", alt: "Adidas Originals", tag: "Originals" },
-  { image: "https://images.pexels.com/photos/6050909/pexels-photo-6050909.jpeg?auto=compress&cs=tinysrgb&w=600", url: "https://www.adidas.com.co/entrenamiento", alt: "Adidas Training", tag: "Training" },
+  {
+    image:
+      "https://images.pexels.com/photos/13058810/pexels-photo-13058810.jpeg?auto=compress&cs=tinysrgb&w=600",
+    url: "https://www.adidas.co/hombre",
+    alt: "Adidas Hombre",
+    tag: "Hombre",
+  },
+  {
+    image:
+      "https://images.pexels.com/photos/233312/pexels-photo-233312.jpeg?auto=compress&cs=tinysrgb&w=600",
+    url: "https://www.adidas.co/mujer",
+    alt: "Adidas Mujer",
+    tag: "Adidas Mujer",
+  },
+  {
+    image:
+      "https://images.pexels.com/photos/6150128/pexels-photo-6150128.jpeg?auto=compress&cs=tinysrgb&w=600",
+    url: "https://www.adidas.co/calzado",
+    alt: "Adidas Calzado",
+    tag: "Adidas Calzado",
+  },
+  {
+    image:
+      "https://images.pexels.com/photos/6050909/pexels-photo-6050909.jpeg?auto=compress&cs=tinysrgb&w=600",
+    url: "https://www.adidas.co/ninos",
+    alt: "Adidas Niños",
+    tag: "Adidas Niños",
+  },
 ];
 
 export function initCarouselBanner({ size, bannerType }) {
@@ -19,18 +43,21 @@ export function initCarouselBanner({ size, bannerType }) {
   const total = SLIDES.length;
 
   function renderSlides() {
-    const tag = (s) => (s.tag ? `<div class="slide-overlay"><span class="slide-tag">${s.tag}</span></div>` : "");
+    const tag = (s) =>
+      s.tag
+        ? `<div class="slide-overlay"><span class="slide-tag">${s.tag}</span></div>`
+        : "";
     track.innerHTML = SLIDES.map(
       (s, i) =>
         `<a class="slide" href="${s.url}" target="_blank" rel="noopener" data-index="${i}" data-url="${s.url}">
           <img src="${s.image}" alt="${s.alt}" loading="lazy" />
           ${tag(s)}
-        </a>`
+        </a>`,
     ).join("");
 
     dots.innerHTML = SLIDES.map(
       (_, i) =>
-        `<button type="button" class="dot" data-index="${i}" aria-label="Ir a imagen ${i + 1}"></button>`
+        `<button type="button" class="dot" data-index="${i}" aria-label="Ir a imagen ${i + 1}"></button>`,
     ).join("");
 
     track.querySelectorAll(".slide").forEach((el) => {
@@ -78,7 +105,12 @@ export function initCarouselBanner({ size, bannerType }) {
   });
 
   banner.addEventListener("click", (e) => {
-    if (prevBtn.contains(e.target) || nextBtn.contains(e.target) || dots.contains(e.target)) return;
+    if (
+      prevBtn.contains(e.target) ||
+      nextBtn.contains(e.target) ||
+      dots.contains(e.target)
+    )
+      return;
     if (e.target.closest(".slide")) return;
     trackEvent({ bannerType, event: "banner_click" });
     window.open(SLIDES[index].url, "_blank");
