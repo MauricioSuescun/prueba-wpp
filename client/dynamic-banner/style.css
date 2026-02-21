@@ -193,3 +193,9 @@ body {
 .panel-links .banner-links a:hover {
   text-decoration: underline;
 }
+
+/* temporarily hide feed & preview sections */
+#feed-section,
+#preview-section {
+  display: none !important;
+}
